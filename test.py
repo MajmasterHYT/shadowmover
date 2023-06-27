@@ -21,7 +21,7 @@ def load_network(ckpt_path):
 def save_image(pre_shadow_img,model_mask, result_dir,threshold):
 
 
-    final_img = torch.where( pre_shadow_img > threshold, 0, 255)
+    final_img = torch.where( pre_shadow_img < threshold, 0, 255)
     # final_img = pre_shadow_img
     final_img = final_img.view(1, 240, 320)
     final_img = final_img.cpu().detach().numpy()
@@ -99,7 +99,7 @@ class Tester(object):
         mask_shadow_background = mask_shadow_background.type(torch.FloatTensor)
 
 
-        pre_shadow_img = self.networkShadow(depth_model, normal_model, image_background, mask_shadow_background)
+        pre_shadow_img = self.networkShadow(depth_model, normal_model, mask_shadow_background, image_background)
 
 
         save_image(pre_shadow_img, model_mask, self.result_dir, self.threshold)
@@ -108,14 +108,14 @@ class Tester(object):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--dir_depth_model', type=str, default="./input/COCO_train2014_000000206394_depth.exr")
-    parser.add_argument('--dir_normal_model', type=str, default="./input/COCO_train2014_000000206394_normal.exr")
-    parser.add_argument('--dir_background', type=str, default="./input/COCO_train2014_000000206394_background.jpg")
-    parser.add_argument('--dir_shadow', type=str, default="./input/COCO_train2014_000000206394_shadow.exr")
-    parser.add_argument('--dir_mask', type=str, default="./input/COCO_train2014_000000206394_mask.exr")
-    parser.add_argument('--save_path', type=str, default="./result/COCO_train2014_000000206394_premask.png")
+    parser.add_argument('--dir_depth_model', type=str, default="./input/COCO_train2014_000000206394_depth.exr", help='depth of model')
+    parser.add_argument('--dir_normal_model', type=str, default="./input/COCO_train2014_000000206394_normal.exr", help='normal of model')
+    parser.add_argument('--dir_background', type=str, default="./input/COCO_train2014_000000206394_background.jpg", help='rgb image of background')
+    parser.add_argument('--dir_shadow', type=str, default="./input/COCO_train2014_000000206394_shadow.exr", help='shadow mask of background')
+    parser.add_argument('--dir_mask', type=str, default="./input/COCO_train2014_000000206394_mask.exr", help='mask of model')
+    parser.add_argument('--save_path', type=str, default="./result/COCO_train2014_000000206394_premask.png", help='save path')
     parser.add_argument('--ckpt_path', type=str, default="./checkpoint.pkl")
-    parser.add_argument('--threshold', type=int, default=0.5)
+    parser.add_argument('--threshold', type=int, default=0.2)
     opt, _ = parser.parse_known_args()
 
 
