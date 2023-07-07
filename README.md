@@ -1,7 +1,7 @@
 # ShadowMover
 
 
-This repository contains code and models for our [paper](https://ieeexplore.ieee.org/document/10049677/):
+This repository contains codes and model for our [paper](https://ieeexplore.ieee.org/document/10049677/):
 
     ShadowMover: Automatically Projecting Real Shadows onto Virtual Object
 
@@ -20,7 +20,7 @@ This repository contains code and models for our [paper](https://ieeexplore.ieee
 depth of model and normal of model in the input folders. 
 Or use the toy images we provide.
 
-2.Run a shitfed shadow estimation model:
+2.Run the shifted shadow estimation model:
 
     python test.py
 
@@ -31,7 +31,7 @@ Or use the toy images we provide.
 
 ## Additional Usage
 
-We also provide the code which transfers shifted shadow map into real shadow on the virtual object. 
+We also provide the code which transfers the estimated shifted shadow map into real shadows on the virtual object. 
 You can find it in the folder
 
     ./compose
