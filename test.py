@@ -118,6 +118,8 @@ if __name__ == "__main__":
     parser.add_argument('--threshold', type=int, default=0.2)
     opt, _ = parser.parse_known_args()
 
+    if not os.path.exists('./result'):
+        os.mkdir('./result')
 
     tester = Tester(opt)
     print('start testing now')
